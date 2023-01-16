@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+  <main class="py-4">
+    <div class="container">
+			<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">Settings</div>
+						<div class="card-body">
+							<form method="POST" action="">
+							{{ form.hidden_tag() }}
+								{% if form.errors %}
+                <div class="alert alert-danger">
+	                {% for error in form.errors %}
+                  <!-- <a class="close" data-dismiss="alert">×</a>-->
+	                <p>{{ form[error].label }} {{form.errors[error][0] }}</p>
+								{% endfor %}
+                </div>
+								{% endif %}
+								<h5>1. Set SSID and WPA-PSK key for this DCP.</h5>
+								<p>These values must be in trackers WiFi settings to connect this to DCP</p>
+								<div class="form-group row">
+									{{ form.ssid.label(class="col-md-3 col-form-label text-md-right") }}
+									<div class="col-md-6">
+										{{ form.ssid(class="form-control", value= form.ssid.data) }}
+									</div>
+								</div>
+								<div class="form-group row">
+ 									{{ form.password.label(class="col-md-3 col-form-label text-md-right") }}
+									<div class="col-md-6">
+										{{ form.password(class="form-control", value=form.password.data) }}
+									</div>
+								</div> 
+
+								<h5>2. Set the address of the real monitoring server.</h5>
+								<p>Accumulated data should be sent to this server by DCP when the Internet connection appears</p>
+									<div class="form-group row">
+										{{ form.server_ip.label(class="col-md-3 col-form-label text-md-right") }}
+										<div class="col-md-6">
+											{{ form.server_ip(class="form-control", value=form.server_ip.data) }}
+										</div>
+									</div>
+									{% for port in ports %}
+									<div class="form-group row">
+										<div class="col-md-3 col-form-label text-md-right">
+											<h6> Port {{ port.port }} </h6> 
+										</div>
+										<ul>
+										{% for device in port.devices %}
+										<li>
+											{{ device.type }} 
+											Header {{ device.header }} 
+										</li>
+										{% endfor %}
+										</ul>
+										
+									</div>
+									{% endfor %}
+								<h5>3. Set Cellular settings</h5>
+								<div class="form-group row">
+									{{ form.apn.label(class="col-md-3 col-form-lable text-md-right") }}
+									<div class="col-md-6">
+										{{ form.apn(class="form-control", value=form.apn.data) }}
+									</div>
+								</div>
+								<div class="form-group row">
+									{{ form.apn_user.label(class="col-md-3 col-form-lable text-md-right") }}
+									<div class="col-md-6">
+										{{ form.apn_user(class="form-control", value=form.apn_user.data) }}
+									</div>
+								</div>
+								<div class="form-group row">
+									{{ form.apn_pass.label(class="col-md-3 col-form-lable text-md-right") }}
+									<div class="col-md-6">
+										{{ form.apn_pass(class="form-control", value=form.apn_pass.data) }}
+									</div>
+								</div>
+								<h5>4. Enable/Disable Sleep Mode</h5>
+								<div class="form-group row">
+									<div class="col-md-3">
+									</div>
+									<div class="col-md-6">
+										<div class="form-checkl form-switch">
+											<input class="form-check-input" type="checkbox" role="switch" id="sleep_mode_id" name="sleep_mode" {{ 'checked="checked"' if form.sleep_mode.data else "" }} >
+											<label class="form-check-label" for="sleep_mode_id"> {{ form.sleep_mode.label }} </label>
+										</div>
+									</div>
+								</div><h5>5. Enable/Disable auto update</h5>
+								<div class="form-group row">
+									<div class="col-md-3">
+									</div>
+									<div class="col-md-6">
+										<div class="custom-control custom-switch">
+											<input class="custom-control-input" type="checkbox" id="autoUpdate" name="autoUpdate" {{ 'checked="checked"' if form.autoUpdate.data else "" }} >
+											<label class="custom-control-label" for="autoUpdateSwitch">{{ form.autoUpdate.label }} </label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row mb-0">
+	                <div class="col-md-8 offset-md-3">
+  	                <button type="submit" class="btn btn-danger">Save</button>
+  	                <button type="reset" class="btn btn-primary">Discard</button>
+								  </div>
+								</div>
+							</form>
+						</div>
+					</div>    
+				</div>
+	    </div>
+		</div>
+  </main>
+{% endblock %}

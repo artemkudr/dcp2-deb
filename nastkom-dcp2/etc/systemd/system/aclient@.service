@@ -1,0 +1,14 @@
+[Unit]
+Description=ACLIENT %i service
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/usr/local/aclient/
+ExecStart=/usr/bin/python3.8 aclient.py %i
+Restart=always
+RestartSec=10s
+
+
+[Install]
+WantedBy=multi-user.target

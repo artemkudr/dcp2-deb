@@ -1,0 +1,187 @@
+{% extends "base.html" %} 
+{% block content %}
+  <main class="py-4">
+    <div class="container">
+			<div class="row justify-content-center">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-auto mr-auto">
+								Stationary WiFi Access Points
+							</div>				
+							<div class="col-auto">
+								<button class="btn btn-danger" id="showModalBtn">Add</button>
+							</div>				
+						</div>					
+					</div>
+						<div class="card-body">
+						{% if aps %}
+							{% for ap in aps %}							
+							<div class="input-group mb-1">
+								<div class="input-group-prepend">
+								     <span class="input-group-text" id=""><b>Name</b></span>
+							  	</div>
+							  	<input type="text" class="form-control" value="{{ ap.name }}" readonly>
+	
+								<div class="input-group-prepend">
+									<span class="input-group-text" id=""><b>Radius(km)</b></span>
+								</div>
+								<input type="text" class="form-control" value="{{ ap.radius }}" readonly>
+
+							  	<button class="btn  btn-primary edit" id="{{ loop.index0 }}" name="edit" >Edit</button> 
+
+							  	<button class="btn btn-danger delete" id="{{ loop.index0 }}" name="delete" >Delete</button> 
+							</div>
+							<div class="input-group mb-1">
+								<div class="input-group-prepend">
+							     <span class="input-group-text" id=""><b>Latitude</b></span>
+							  	</div>
+							  	<input type="text" class="form-control" value="{{ ap.lat }}" readonly>
+							  	<input type="text" class="form-control" value="{{ ap.lon }}" readonly>
+							  	<div class="input-group-append">
+							  	 <span class="input-group-text" id=""><b>Longitude</b></span>
+							  	</div>
+							</div>
+							<hr/>
+							{% endfor %}
+						{% endif %} 								
+						</div>
+					</div>    
+				</div>
+	    </div>
+		</div>
+  </main>
+{% endblock %}
+
+
+{% block modal %}
+<div class="modal fade" id="createAPModal" role="dialog">
+	<div class="modal-dialog modal-sm">
+  	<div class="modal-content">
+    	<div class="modal-header">                
+      	<h4 class="modal-title">Stationary AP</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" id="attachment-body-content">
+      	<span id="createAPResult"> </span>
+        <form method="POST" id="createAPForm" class="form-horizontal"  enctype="multipart/form-data">
+					{{ form.hidden_tag() }}
+					<div class="form-group">
+						{{ form.name(class="form-control") }}
+          </div>
+          
+        	<div class="form-group">
+						{{ form.lat(class="form-control") }}
+          </div>
+					<div class="form-group">
+						{{ form.lon(class="form-control") }}
+          </div>
+					<div class="form-group">
+						{{ form.radius(class="form-control") }}
+          </div>
+
+          <div class="form-group" align="right">
+						{{ form.id }}
+            <input type="submit" name="action_button" id="action_button" class="btn btn-primary" value="Create" />
+          </div>                 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+	<script type="text/javascript">
+ 		$(document).ready(function(){
+			$('#createAPForm').on('submit', function(event){
+  	    event.preventDefault();
+				var id = $('#id').val();
+				var method_type = "POST";
+
+				if ($('#action_button').attr('value') == "Create"){
+					method_type = "POST";
+				}
+				if ($('#action_button').attr('value') == "Update"){
+					method_type = "PUT";
+				}
+
+				$.ajax({
+					url : "/staticaps/"+id,
+					method : method_type,
+					data: new FormData(this),
+					contentType: false,
+					cache: false,
+					processData: false,
+					dataType: 'json',
+					success: function(data){
+						var html = '';
+            if (data.errors){
+            	 html = '<div class="alert alert-danger">';
+               for (var count=0; count < data.errors.length; count++) {
+              	 html += '<p>' + data.errors[count] + '</p>';
+               }
+               html += '</div>';
+            }
+            if (data.success){
+	            html = '<div class="alert alert-success">' + data.success + '</div>';
+              $('#createAPForm')[0].reset();
+							location.reload();            	
+            }
+            $('#createAPResult').html(html);	
+					},
+					error: function(xhr, error){
+					}
+				});
+    	});		
+
+			$('#showModalBtn').on('click', function(){
+				$('#createAPResult').html(''); 
+				$('#createAPForm')[0].reset(); 
+				$('#id').val(0); 
+				$('#action_button').val('Create');
+				$('#createAPModal').modal('show');
+			});
+
+			$(document).on('click', '.edit', function(){
+				var id = $(this).attr('id')
+				$('#id').val(id)
+				$.ajax({
+					url : "/staticaps/"+id,
+					method : "GET",
+					dataType: 'json',
+					success: function(data){
+						var html = '';
+						$('#name').val(data.name)
+						$('#lat').val(data.lat)
+						$('#lon').val(data.lon)
+						$('#radius').val(data.radius)
+	
+						$('#action_button').val('Update');
+						$('#createAPModal').modal('show');            	
+					},
+					error: function(xhr, error){
+					}
+				});
+			});
+
+			$(document).on('click', '.delete', function(){
+				var ap = $(this).attr('id')
+				$.ajax({
+					url : "/staticaps/"+ap,
+					method : "DELETE",
+					dataType: 'json',
+					success: function(data){
+						location.reload();            	
+					},
+					error: function(xhr, error){
+					}
+				});				
+			});
+
+
+		});
+	</script>
+{% endblock %}

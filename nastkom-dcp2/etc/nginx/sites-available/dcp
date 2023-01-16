@@ -1,0 +1,26 @@
+server {
+        listen 80 default_server;
+#       server_name dcp.com www.dcp.com;
+        server_name _;
+
+        location / {
+                include proxy_params;
+                proxy_pass http://unix:/usr/local/dcp-app/dcp-app.sock;
+        }
+
+        location /eMMC {
+                alias /usr/local/data;
+                autoindex on;
+    autoindex_exact_size on;
+    autoindex_format html;
+    autoindex_localtime on;
+        }
+        location /uSDcard {
+                alias /media/sd/;
+                autoindex on;
+    autoindex_exact_size on;
+    autoindex_format html;
+    autoindex_localtime on;
+        }
+}
+

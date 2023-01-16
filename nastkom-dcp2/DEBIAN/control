@@ -1,0 +1,10 @@
+Package: nastkom-dcp2
+Version: 3.1
+Section: custom
+Priority: optional
+Architecture: all
+Essential: no
+Installed-Size: 1024
+Maintainer: nastkom
+Description: Data Collection Point Ver.2
+Depends: hostapd, nginx, python3-pip

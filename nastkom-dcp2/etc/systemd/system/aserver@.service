@@ -1,0 +1,15 @@
+[Unit]
+Description=ASERVER %i service
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/usr/local/aserver/
+ExecStart=/usr/bin/python3 aserver.py %i
+Restart=always
+RestartSec=10s
+RuntimeMaxSec=1800
+
+[Install]
+WantedBy=multi-user.target
+Alias=bash.service

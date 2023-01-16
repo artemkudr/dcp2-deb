@@ -1,0 +1,11 @@
+[Unit]
+Description=WiFi AP/STA mode switch service
+After=network.target
+
+[Service]
+RestartSec=15s
+ExecStart=/usr/local/scripts/wifi/wifimode.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

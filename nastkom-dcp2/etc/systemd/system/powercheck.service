@@ -1,0 +1,11 @@
+[Unit]
+Description=Powercheck service
+After=multi-user.target
+
+[Service]
+RestartSec=1s
+ExecStart=/usr/local/scripts/powercheck.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

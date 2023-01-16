@@ -1,0 +1,91 @@
+#! /bin/bash
+
+# preinst hook
+
+function stop_service () {
+        echo "Try to stop service $1"
+        systemctl is-active $1
+        if [ $? -eq 0 ]; then
+                systemctl stop $1
+		echo "got it"
+        else
+                echo "Service not found"
+        fi
+}
+
+function disable_service () {
+        echo "Try to disable service $1"
+        systemctl is-enabled $1
+        if [ $? -eq 0 ]; then
+                systemctl disable $1
+		echo "got it"
+        else
+                echo "Service not found"
+        fi
+}
+
+
+stop_service wifimode.service
+stop_service stop gpsget.service
+
+stop_service aclient@22.service
+stop_service aclient@23.service
+stop_service aclient@25.service
+disable_service aclient@22.service
+disable_service aclient@23.service
+disable_service aclient@25.service
+
+stop_service aserver@1.service
+stop_service aserver@2.service
+stop_service aserver@3.service
+disable_service aservre@1.service
+disable_service aserver@2.service
+disable_service aserver@3.service
+
+stop_service aclient@1.service
+stop_service aclient@2.service
+stop_service aclient@3.service
+disable_service aclient@1.service
+disable_service aclient@2.service
+disable_service aclient@3.service
+
+
+stop_service aserver.service
+disable_service aserver.service
+
+stop_sevice aclient.service
+disable_service aclient.service
+
+stop_service hostapd.service
+stop_service dcp-app.service
+stop_service media-sd.automount
+
+stop_service limit-arch-dir@22.service
+stop_service limit-arch-dir@23.service
+stop_service limit-arch-dir@24.service
+stop_service limit-arch-dir@25.service
+stop_service limit-tx-dir@22.service
+stop_service limit-tx-dir@23.service
+stop_service limit-tx-dir@25.service
+disable_service limit-arch-dir@22.service
+disable_service limit-arch-dir@23.service
+disable_service limit-arch-dir@24.service
+disable_service limit-arch-dir@25.service
+disable_service limit-tx-dir@22.service
+disable_service limit-tx-dir@23.service
+disable_service limit-tx-dir@25.service
+
+stop_service limit-arch-dir@A4.service
+stop_service limit-arch-dir@A5.service
+stop_service limit-arch-dir@UTPM.service
+stop_service limit-tx-dir@A4.service
+stop_service limit-tx-dir@A5.service
+stop_service limit-tx-dir@UTPM.service
+disable_service limit-arch-dir@A4.service
+disable_service limit-arch-dir@A5.service
+disable_service limit-arch-dir@UTPM.service
+disable_service limit-tx-dir@A4.service
+disable_service limit-tx-dir@A5.service
+disable_service limit-tx-dir@UTPM.service
+
+stop_service powercheck.service

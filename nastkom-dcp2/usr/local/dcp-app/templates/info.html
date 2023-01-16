@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+  <main class="py-4">
+    <div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">Info</div>
+					<div class="card-body">
+						{% if version %}
+                                               	{{ version }}
+                                                {% endif %}<br/>
+
+						{% if serial %}
+						Serial={{ serial }}
+						{% endif %}<br/>
+
+						{% if soctemp %}
+						CPU Temperature={{ soctemp }}C
+						{% endif %}<br/>
+
+						{% if date %}
+						Current Date={{ date }}
+						{% endif %}<br/>
+						
+						{% if uptime %}
+						Up time={{ uptime }}
+						{% endif %}<br/>						
+
+						{% if latlon %}
+						GNSS={{ latlon[0] }} {{ latlon[1] }}
+						{% endif %}<br/>
+						
+						{% if apmode %}
+						WiFi mode={{ apmode }}
+						{% endif %}<br/>
+						
+						{% if wwan  %}
+						Cellular = {{ wwan }}
+						{% endif %}<bt/>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+   </div>
+  </main>
+{% endblock %}

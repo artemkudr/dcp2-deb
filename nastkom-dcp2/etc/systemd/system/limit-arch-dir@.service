@@ -1,0 +1,11 @@
+[Unit]
+Description=Limit %i archive directory size service
+
+[Service]
+User=root
+RestartSec=15s
+ExecStart=/usr/local/scripts/limit-directory-size.sh /media/sd/archive/%i 1500000000 1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

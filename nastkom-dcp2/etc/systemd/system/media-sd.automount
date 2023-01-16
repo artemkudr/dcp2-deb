@@ -1,0 +1,8 @@
+[Unit]
+Description=sd card mount
+
+[Automount]
+Where=/media/sd
+
+[Install]
+WantedBy=multi-user.target

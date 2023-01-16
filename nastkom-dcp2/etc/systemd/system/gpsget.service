@@ -1,0 +1,13 @@
+[Unit]
+Description=Get GPS location service
+After=remote-fs.target
+After=syslog.target
+After=network.target
+
+[Service]
+ExecStart=/usr/local/scripts/gpsget.py
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

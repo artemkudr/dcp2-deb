@@ -1,0 +1,6 @@
+#! /bin/bash
+dpkg-deb --build nastkom-dcp2
+cp nastkom-dcp2.deb nastkom-dcp2-3.1_amd64.deb
+cp nastkom-dcp2-3.1_amd64.deb $('pwd')/release/
+cd $('pwd')/release/
+dpkg-scanpackages -m . | gzip -c9 > Packages.gz

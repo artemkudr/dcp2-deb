@@ -1,0 +1,13 @@
+[Unit]
+Description=DCP web application
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/usr/local/dcp-app
+RestartSec=5s
+ExecStart=/usr/bin/gunicorn -b unix:dcp-app.sock -w 4  dcp-app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

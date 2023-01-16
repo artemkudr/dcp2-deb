@@ -1,0 +1,48 @@
+{
+  "apn": "internet",
+  "apn_user": "",
+  "apn_pass": "",
+  "ssid": "NASTKOM",
+  "local_ip": "192.168.10.1",
+  "local_port": 55555,
+  "aps": [
+    {
+      "name": "Internet",
+      "lat": "55.599909518",
+      "lon": "37.043198934",
+      "radius": 2
+    }
+  ],
+  "wpa_passphrase": "Nastkom1",
+  "autoUpdate": "False",
+  "sleep_mode": "True",
+  "ports": [
+    {
+      "port": 87,
+      "devices": [
+        {
+          "header": 35,
+          "type": "A5"
+        },
+        {
+          "header": 37,
+          "type": "UTPM"
+        }
+      ]
+    },
+    {
+      "port": 85,
+      "devices": [
+        {
+          "header": 34,
+          "type": "A4"
+        },
+	{ 
+	  "header" : 35,
+	  "type" : "A4_old"
+	}
+      ]
+    }
+  ],
+  "server_ip": "77.242.3.226"
+}

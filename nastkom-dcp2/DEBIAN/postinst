@@ -1,0 +1,59 @@
+#!/bin/bash
+
+pip3 install --upgrade setuptools
+pip3 install flask
+pip3 install Flask-WTF
+pip3 install gunicorn
+pip3 install pyserial
+
+#cp /etc/chrony/chrony.conf.dcp /etc/chrony/chrony.conf
+
+#sed -i 's/^127.0.0.1.*$/127.0.0.1   localhost dcp/' /etc/hosts
+#sed -i 's/^::1.*$/::1         localhost dcp/' /etc/hosts
+
+#echo 'dcp' | tee /etc/hostname > /dev/null
+
+
+mkdir -p /media/sd
+#mkdir -p /usr/local/dcp-tx
+#mkdir -p /usr/local/dcp-rx
+#mkdir -p /usr/local/archive
+
+systemctl daemon-reload
+systemctl enable aclient@A4.service
+systemctl enable aclient@A4_old.service
+systemctl enable aclient@A5.service
+systemctl enable aclient@UTPM.service
+#systemctl disable aserver.service
+systemctl enable aserver@85.service
+systemctl enable aserver@87.service
+systemctl disable hostapd.service
+systemctl enable dcp-app.service
+systemctl enable media-sd.automount
+systemctl enable limit-arch-dir@A4.service
+systemctl enable limit-arch-dir@A4_old.service
+systemctl enable limit-arch-dir@A5.service
+systemctl enable limit-arch-dir@UTPM.service
+#systemctl enable limit-tx-dir@A4.service
+#systemctl enable limit-tx-dir@A5.service
+#systemctl enable limit-tx-dir@UTPM.service
+systemctl enable gpsget.service
+systemctl enable wifimode.service
+systemctl enable powercheck.service
+
+
+cp /usr/local/stm32mp157c-ya157c-v2.dtb /boot/stm32mp157c-ya157c-v2.dtb
+cp /usr/share/dcp-conf/dcp.conf.def /usr/share/dcp-conf/dcp.conf
+cp /usr/local/fstab /etc/fstab
+
+ln -sf /etc/nginx/sites-available/dcp /etc/nginx/sites-enabled
+rm -f /etc/nginx/sites-available/default*
+rm -f /etc/nginx/sites-enabled/default*
+nginx -s reload
+
+rm -f /etc/systemd/system/aclient.service
+rm -f /etc/systemd/system/aserver.service
+rm -f /etc/systemd/system/limit-arch-dir.service
+rm -f /etc/systemd/system/limit-tx-dir.service
+
+systemctl reboot

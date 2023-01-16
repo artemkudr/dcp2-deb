@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DCP2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="static/jquery-3.4.1.min.js"></script>
+		<script src="static/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+	<div class="container">
+		<img src="static/img/logo.png"> 
+	      <!-- <a class="navbar-brand" href="#">DCPv2</a> -->
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	      </button>
+	      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+					{% if session.logged_in %}
+	        <!-- Left Side Of Navbar -->
+	        <ul class="navbar-nav mr-auto">
+	          <li class="nav-item">
+	            <a class="nav-link" href={{ url_for('settings') }}>Settings</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href={{ url_for('staticaps') }}>Stationary APs</a>
+	          </li>
+		  <li class="nav-item">
+	            <a class="nav-link" href="/eMMC">eMMC</a>
+	          </li>
+		  <li class="nav-item">
+	            <a class="nav-link" href="/uSDcard">uSDcard</a>
+	          </li>
+		  <li class="nav-item">
+	            <a class="nav-link" href="/info">Info</a>
+	          </li>
+	        </ul>
+					{% endif %}
+	        <!-- Right Side Of Navbar -->
+	        <ul class="navbar-nav ml-auto">
+					{% if session.logged_in %}
+						<!-- <li class="nav-item">
+							<form class="form-inline mr-1" action="/apply" method="GET">
+								<button class="btn btn-outline-primary" type="submit">Apply settings</button>
+							</form>						
+						</li>
+						
+						<li class="nav-item">
+							<form class="form-inline mr-1" action="/update" method="GET">
+								<button class="btn btn-outline-primary" type="submit">Update FW</button>
+							</form>						
+						</li>			
+						-->
+						<li class="nav-item">
+							<form class="form-inline ml-1" action="/reboot" method="POST">
+								<button class="btn btn-outline-primary" type="submit">Reboot</button>
+							</form>						
+						</li>
+					{% endif %}
+	          <!-- Authentication Links -->
+	   				<li class="nav-item">
+						{% if session.logged_in %}
+	          	<a class="nav-link" href="/logout">Logout</a>
+	          {% else %}
+	            <a class="nav-link" href="/login">Login</a>
+			      {% endif  %}
+	          </li>
+	        </ul>
+	      </div>
+			</div>
+    </nav>
+    <div class="container">
+
+      <!-- errors -->
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
+
+      <!-- messages -->
+      <div class="container">
+	{% for message in get_flashed_messages() %}
+		<div class="alert alert-warning">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			{{ message }}
+		</div>
+	{% endfor %}
+      </div>     
+
+      <!-- child template -->
+      {% block content %}{% endblock %}
+
+    </div>     
+      
+{% block script %}{% endblock %}
+
+  </body>
+</html>
+
+{% block modal %}{% endblock %}

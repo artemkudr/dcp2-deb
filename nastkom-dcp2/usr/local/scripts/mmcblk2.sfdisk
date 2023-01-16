@@ -1,0 +1,13 @@
+label: gpt
+label-id: 00042021-0408-4601-9DCC-A8C51255994F
+device: /dev/mmcblk2
+unit: sectors
+first-lba: 34
+last-lba: 7634910
+sector-size: 512
+
+/dev/mmcblk2p1 : start=          34, size=        4096, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=8EF917D1-2C6F-4BD0-A5B2-331A19F91CB2, name="ssbl"
+/dev/mmcblk2p2 : start=        4130, size=      131072, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=77877125-ADD0-4374-9E60-02CB591C9737, name="bootfs", attrs="LegacyBIOSBootable"
+/dev/mmcblk2p3 : start=      135202, size=       32768, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=B4B84B8A-04E3-48AE-8536-AFF5C9C495B1, name="vendorfs"
+/dev/mmcblk2p4 : start=      167970, size=     2465792, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=35219908-C613-4B08-9322-3391FF571E19, name="rootfs"
+/dev/mmcblk2p5 : start=     2633762, size=     2097152, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=8E123A33-E3D3-4DB9-92F4-D3EBD9B3224F, name="userfs"

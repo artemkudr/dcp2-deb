@@ -1,0 +1,6 @@
+[Match]
+Name=wwan*
+
+[Network]
+DHCP=ipv4
+
